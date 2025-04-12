@@ -5,7 +5,8 @@
       <InputText v-model="currentText" class="w-full flex-auto" placeholder="可以输入些什么然后回车，但更便捷的是在你当前软件中选中然后按下 Ctrl+Q"
         @keydown.enter="onEditSend" />
     </div>
-    <LLMResult :text="llmResult" :format="currentTool?.responseFormat" class="flex-auto"></LLMResult>
+    <LLMResult :text="llmResult" :format="currentTool?.responseFormat" :progress="llmProgress" class="flex-auto">
+    </LLMResult>
 
   </div>
 </template>
@@ -13,7 +14,7 @@
 <script setup lang="ts">
 
 
-import { ref, onMounted, watch, computed } from "vue";
+import { ref, onMounted, computed } from "vue";
 import Tools from '@renderer/components/Tools.vue';
 import LLMResult from '@renderer/components/LLMResult.vue';
 import { useSettings } from '@renderer/composables/settings';
@@ -26,6 +27,7 @@ import { Client as McpClient } from "@modelcontextprotocol/sdk/client/index";
 const currentText = ref('');
 const currentImage = ref('');
 const llmResult = ref('');
+const llmProgress = ref('');
 const settings = useSettings();
 const tools = useTools();
 
@@ -42,10 +44,10 @@ const currentTool = computed(() => {
 })
 
 
-watch(
-  () => settings.tools.activated,
-  invokeLLM
-)
+// watch(
+//   () => settings.tools.activated,
+//   invokeLLM
+// )
 
 async function invokeLLM() {
   if (currentText.value) {
@@ -99,7 +101,8 @@ async function requestLLM(userPrompt: string, imageUrl: string = '') {
     return
   }
 
-  llmResult.value = '正在请求...'
+  llmResult.value = ''
+  llmProgress.value = '正在生成...'
 
   const client = new OpenAI({
     apiKey: settings.llm.apiKey,
@@ -117,6 +120,9 @@ async function requestLLM(userPrompt: string, imageUrl: string = '') {
     model,
     messages: [],
     stream: true,
+    stream_options: {
+      include_usage: true,
+    }
   }
 
   if (imageUrl) {
@@ -164,8 +170,15 @@ async function llmToolCall(llmClient: OpenAI, request: OpenAI.Chat.Completions.C
     mcpClient = null
   }
 
+  const usage: OpenAI.CompletionUsage = {
+    prompt_tokens: 0,
+    completion_tokens: 0,
+    total_tokens: 0,
+  }
 
-  llmResult.value = '';
+  const t1 = Date.now()
+
+
   while (true) {
 
     const stream = await llmClient.chat.completions.create(request)
@@ -174,9 +187,11 @@ async function llmToolCall(llmClient: OpenAI, request: OpenAI.Chat.Completions.C
     for await (const chunk of stream) {
       for (const choice of chunk.choices) {
         if (choice.delta.content) {
+          llmProgress.value = `正在生成...`
           llmResult.value += choice.delta.content;
         }
         for (const toolCall of choice.delta.tool_calls || []) {
+          llmProgress.value = `选择工具 ${toolCall.function?.name || ''}...`
           const tc = tooCalls[toolCall.index];
           if (tc) {
             if (tc.function) {
@@ -189,12 +204,18 @@ async function llmToolCall(llmClient: OpenAI, request: OpenAI.Chat.Completions.C
           }
         }
       }
+      if (chunk.usage) {
+        usage.prompt_tokens += chunk.usage.prompt_tokens;
+        usage.completion_tokens += chunk.usage.completion_tokens;
+        usage.total_tokens += chunk.usage.total_tokens;
+      }
     }
     if (Object.keys(tooCalls).length === 0 || !mcpClient) {
       break
     }
     const toolMessage: OpenAI.Chat.Completions.ChatCompletionToolMessageParam[] = []
     for (const toolCall of Object.values(tooCalls)) {
+      llmProgress.value = `正在调用工具 ${toolCall.function?.name || ''}...`
       if (toolCall.function && toolCall.function.name) {
         const result = await mcpCallTool(mcpClient, toolCall.function.name, toolCall.function.arguments || '{}');
         toolMessage.push({
@@ -224,6 +245,10 @@ async function llmToolCall(llmClient: OpenAI, request: OpenAI.Chat.Completions.C
       break
     }
   }
+
+  const t2 = Date.now()
+  const duration = ((t2 - t1) / 1000).toPrecision(2)
+  llmProgress.value = `完成! 输入: ${usage.prompt_tokens} 生成: ${usage.completion_tokens} 耗时: ${duration}秒`
 
   if (mcpClient) {
     await mcpClient.close();

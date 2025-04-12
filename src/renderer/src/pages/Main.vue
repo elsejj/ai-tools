@@ -19,7 +19,7 @@ import LLMResult from '@renderer/components/LLMResult.vue';
 import { useSettings } from '@renderer/composables/settings';
 import { useTools } from '@renderer/composables/tools';
 import { OpenAI } from 'openai';
-import { ChatCompletion, ChatCompletionCreateParamsStreaming, ChatCompletionMessageToolCall } from "openai/resources/index";
+import { ChatCompletionCreateParamsStreaming } from "openai/resources/index";
 import { connectMcpClient, mcpCallTool, mcpListTools } from "@renderer/services/mcp";
 import { Client as McpClient } from "@modelcontextprotocol/sdk/client/index";
 

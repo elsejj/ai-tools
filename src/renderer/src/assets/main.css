@@ -1,0 +1,27 @@
+@import './base.css';
+
+
+.easy-table {
+  border-collapse: collapse;
+  max-width: 100%;
+}
+
+.easy-table th {
+  background-color: #f2f2f2;
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.easy-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.easy-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.easy-table tr:hover {
+  background-color: #f2f2f2;
+}

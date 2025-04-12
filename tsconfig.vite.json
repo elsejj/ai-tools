@@ -1,0 +1,15 @@
+{
+  "extends": "@electron-toolkit/tsconfig/tsconfig.node.json",
+  "include": [
+    "electron.vite.config.*"
+  ],
+  "compilerOptions": {
+    "target": "ESNext",
+    "composite": true,
+    "types": [
+      "electron-vite/node"
+    ],
+    "moduleResolution": "nodenext",
+    "module": "ESNext"
+  }
+}

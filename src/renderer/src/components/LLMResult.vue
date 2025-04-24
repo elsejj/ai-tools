@@ -1,7 +1,7 @@
 <template>
   <div class="w-full h-full overflow-hidden p-2 bg-surface-0 rounded-md">
     <div class="w-full flex items-center gap-2 justify-end">
-      <div class="flex-auto text-sm text-gray-500">{{ progress }}</div>
+      <div class="flex-auto text-sm text-gray-500 transition duration-500 ease-in-out">{{ progress }}</div>
       <Button label="复制文本" link @click="copyAsText" class="" />
       <Button label="复制HTML" link @click="copyAsHtml" class="" />
       <Button label="复制代码" link @click="copyAsCode" class="" />

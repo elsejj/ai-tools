@@ -2,9 +2,9 @@
   <div class="w-full h-full overflow-hidden p-2 bg-surface-0 rounded-md">
     <div class="w-full flex items-center gap-2 justify-end">
       <div class="flex-auto text-sm text-gray-500 transition duration-500 ease-in-out">{{ progress }}</div>
-      <Button label="复制文本" link @click="copyAsText" class="" />
-      <Button label="复制HTML" link @click="copyAsHtml" class="" />
-      <Button label="复制代码" link @click="copyAsCode" class="" />
+      <Button label="复制纯文本" link @click="copyAsText" class="" />
+      <Button label="复制富文本" link @click="copyAsHtml" class="" />
+      <Button label="复制其中代码" link @click="copyAsCode" class="" />
     </div>
     <ScrollPanel class=" w-full h-full">
       <div ref="htmlNode" v-html="htmlSource" class="w-full wrap-break-word"></div>
@@ -118,7 +118,7 @@ function copyAsText() {
   toast.add({
     severity: 'success',
     summary: '复制成功',
-    detail: '代码已复制到剪贴板',
+    detail: '已复制到剪贴板,可以在文本编辑器中粘贴',
     life: 3000,
   })
 }
@@ -161,13 +161,23 @@ async function copyAsHtml() {
   toast.add({
     severity: 'success',
     summary: '复制成功',
-    detail: '代码已复制到剪贴板',
+    detail: '已复制到剪贴板，可以在Word/Excel等中粘贴',
     life: 3000,
   })
 }
 
 function copyAsCode() {
-  window.api.clipboard.writeText(removeQuote(props.text));
+  const code = removeQuote(props.text);
+  if (code === '') {
+    toast.add({
+      severity: 'warn',
+      summary: '复制失败',
+      detail: '没有代码可供复制',
+      life: 3000,
+    })
+    return
+  }
+  window.api.clipboard.writeText(code);
   toast.add({
     severity: 'success',
     summary: '复制成功',

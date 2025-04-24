@@ -19,7 +19,7 @@ export function aiToolEqual(a: AiTool, b: AiTool): boolean {
 export const DEFAULT_TOOLS: AiTool[] = [
   {
     "name": "翻译",
-    "systemPrompt": "你是一个翻译器，请根据以下的规则对用户输入进行翻译\n\n- 首先识别用户的输入是中文或英文\n- 然后对进行 中->英 或 英->中 的翻译\n- 翻译的结果需要尽可能的符合目标语言的语法习惯。",
+    "systemPrompt": "你是一个翻译器，请根据以下的规则对用户输入进行翻译\n\n- 首先识别用户的输入是中文或英文\n- 然后对进行 中->英 或 英->中 的翻译\n- 翻译的结果需要尽可能的符合目标语言的语法习惯。\n- 你仅需要输出翻译后的结果，无需其他的解释",
     "responseFormat": "markdown"
   },
   {

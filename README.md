@@ -14,6 +14,14 @@
 - 在任何支持选中复制的软件中, 选中一些内容, 按下 `Ctrl+Q`, 发送`答疑`请求, 让模型回答你对选中内容的进行解释.
 ![答疑](./doc/screenshots/term.jpg)
 
+## MCP 支持
+
+`AiToolsCtrlQ` 支持 `MCP` 的 `Prompts` 和 `Tools` 功能，但仅支持通过 `HTTP` 的MCP服务, 不支持 `STDIO` 访问 `MCP`
+
+- `Prompts` 功能, 如果 `MCP` 提供了 `Prompts` 功能, 在配置时会列出所有可用的 `Prompts`, 你可以选择一个作为默认的 `Prompt`
+- `Tools` 功能, 如果 `MCP` 提供了 `Tools` 功能, 在使用时, 这些功能会由模型自动选择是否使用.
+
+![MCP 支持](./doc/screenshots/mcp_use.jpg)
 
 # 使用方式
 

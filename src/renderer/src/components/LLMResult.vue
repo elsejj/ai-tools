@@ -1,12 +1,12 @@
 <template>
-  <div class="w-full h-full overflow-hidden p-2 bg-surface-0 rounded-md">
-    <div class="w-full flex items-center gap-2 justify-end">
+  <div class="w-full h-full overflow-hidden p-2 bg-surface-0 rounded-md flex flex-col gap-2">
+    <div class=" flex-none w-full h-10 flex items-center gap-2 justify-end">
       <div class="flex-auto text-sm text-gray-500 transition duration-500 ease-in-out">{{ progress }}</div>
       <Button label="复制纯文本" link @click="copyAsText" class="" />
       <Button label="复制富文本" link @click="copyAsHtml" class="" />
       <Button label="复制其中代码" link @click="copyAsCode" class="" />
     </div>
-    <ScrollPanel class="w-full h-full">
+    <ScrollPanel class="w-full h-[90%]">
       <div ref="htmlNode" v-html="htmlSource" class="w-full wrap-break-word p-2"></div>
       <div ref="bottomNode"></div>
     </ScrollPanel>

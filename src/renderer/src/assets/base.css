@@ -28,3 +28,10 @@
 html {
   font-size: 12px;
 }
+
+code {
+  white-space: pre-wrap;
+  word-break: break-all;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}

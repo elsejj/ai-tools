@@ -6,15 +6,16 @@
       <Button label="复制富文本" link @click="copyAsHtml" class="" />
       <Button label="复制其中代码" link @click="copyAsCode" class="" />
     </div>
-    <ScrollPanel class=" w-full h-full">
-      <div ref="htmlNode" v-html="htmlSource" class="w-full wrap-break-word"></div>
+    <ScrollPanel class="w-full h-full">
+      <div ref="htmlNode" v-html="htmlSource" class="w-full wrap-break-word p-2"></div>
+      <div ref="bottomNode"></div>
     </ScrollPanel>
   </div>
 </template>
 
 
 <script lang="ts" setup>
-import { computed, useTemplateRef } from 'vue'
+import { computed, onUpdated, useTemplateRef } from 'vue'
 import { Marked } from 'marked'
 import { markedHighlight } from "marked-highlight"
 import hljs from 'highlight.js'
@@ -52,6 +53,17 @@ const props = defineProps({
 
 const htmlNode = useTemplateRef('htmlNode');
 const toast = useToast();
+const bottomNode = useTemplateRef('bottomNode');
+
+
+onUpdated(() => {
+  if (bottomNode.value) {
+    bottomNode.value.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+    });
+  }
+});
 
 const languages = {
   json: jsonLang,

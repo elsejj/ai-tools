@@ -1,10 +1,10 @@
 {
   "name": "ai-tools",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "A LLM client with shortcut",
   "main": "./out/main/index.js",
   "author": "elsejj",
-  "homepage": "https://github.com/elsejj/aiToolsCtrlQ",
+  "homepage": "https://github.com/elsejj/ai-tools",
   "scripts": {
     "typecheck:node": "tsc --noEmit -p tsconfig.node.json --composite false",
     "typecheck:web": "vue-tsc --noEmit -p tsconfig.web.json --composite false",
@@ -19,35 +19,35 @@
     "build:linux": "npm run build && electron-builder --linux"
   },
   "dependencies": {
-    "@electron-toolkit/preload": "^3.0.1",
+    "@electron-toolkit/preload": "^3.0.2",
     "@electron-toolkit/utils": "^4.0.0",
     "sendkey": "./sendkey/dist.win32_x64/"
   },
   "devDependencies": {
     "@electron-toolkit/tsconfig": "^1.0.1",
-    "@modelcontextprotocol/sdk": "^1.9.0",
-    "@primeuix/themes": "^1.0.1",
+    "@modelcontextprotocol/sdk": "^1.10.2",
+    "@primeuix/themes": "^1.0.3",
     "@primevue/auto-import-resolver": "^4.3.3",
-    "@tailwindcss/vite": "^4.1.3",
-    "@types/node": "^22.13.13",
+    "@tailwindcss/vite": "^4.1.4",
+    "@types/node": "^22.15.1",
     "@vitejs/plugin-vue": "^5.2.3",
     "dexie": "^4.0.11",
-    "electron": "^35.1.4",
+    "electron": "^35.2.1",
     "electron-builder": "^25.1.8",
     "electron-vite": "^3.1.0",
     "highlight.js": "^11.11.1",
-    "marked": "^15.0.8",
+    "marked": "^15.0.11",
     "marked-highlight": "^2.2.1",
-    "openai": "^4.93.0",
-    "pinia": "^3.0.1",
+    "openai": "^4.96.0",
+    "pinia": "^3.0.2",
     "primevue": "^4.3.3",
-    "tailwindcss": "^4.1.3",
+    "tailwindcss": "^4.1.4",
     "tailwindcss-primeui": "^0.6.1",
-    "typescript": "^5.8.2",
-    "unplugin-vue-components": "^28.4.1",
-    "vite": "^6.2.3",
+    "typescript": "^5.8.3",
+    "unplugin-vue-components": "^28.5.0",
+    "vite": "^6.3.3",
     "vue": "^3.5.13",
-    "vue-router": "4",
-    "vue-tsc": "^2.2.8"
+    "vue-router": "^4.5.0",
+    "vue-tsc": "^2.2.10"
   }
 }

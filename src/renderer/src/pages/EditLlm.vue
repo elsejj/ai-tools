@@ -42,10 +42,6 @@ async function saveLlm() {
     errMsg.value = '请填写API地址';
     return;
   }
-  if (!llm.apiKey) {
-    errMsg.value = '请填写API密钥';
-    return;
-  }
   if (!llm.model) {
     errMsg.value = '请填写模型名称';
     return;

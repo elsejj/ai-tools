@@ -91,7 +91,7 @@ async function onCtrlQ() {
 
 async function requestLLM(userPrompt: string, imageUrl: string = '') {
 
-  if (!settings.llm.apiKey || !settings.llm.baseUrl || !settings.llm.model) {
+  if (!settings.llm.baseUrl || !settings.llm.model) {
     llmResult.value = '请先设置大模型'
     return
   }

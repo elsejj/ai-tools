@@ -1,7 +1,7 @@
 import { BrowserWindow } from "electron";
 import { is } from '@electron-toolkit/utils'
 import { join } from "path";
-import icon from '../../../resources/logo.jpg?asset'
+import icon from '../../../resources/icon.png?asset'
 
 
 
@@ -36,7 +36,8 @@ export class WindowManager {
       height: 700,
       autoHideMenuBar: true,
       show: false,
-      ...(process.platform === 'linux' ? { icon } : {}),
+      icon: icon,
+      //...(process.platform === 'linux' ? { icon } : {}),
       webPreferences: {
         preload: join(__dirname, '../preload/index.js'),
         sandbox: false,

@@ -2,11 +2,11 @@ import { app, BrowserWindow, ipcMain, globalShortcut, } from 'electron'
 import { electronApp, optimizer } from '@electron-toolkit/utils'
 import { WindowManager } from './manager/windowManager'
 import { sendKeys } from 'sendkey'
-import { join } from 'path'
-import { spawn, ChildProcessWithoutNullStreams  } from 'child_process'
+// import { join } from 'path'
+// import { spawn, ChildProcessWithoutNullStreams  } from 'child_process'
 
 
-let gatewayProcess: ChildProcessWithoutNullStreams | null = null
+//let gatewayProcess: ChildProcessWithoutNullStreams | null = null
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -69,11 +69,11 @@ app.whenReady().then(() => {
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
-    if (gatewayProcess) {
-      gatewayProcess.kill()
-      console.log('gatewayProcess killed', gatewayProcess.killed)
-      gatewayProcess = null
-    }
+    // if (gatewayProcess) {
+    //   gatewayProcess.kill()
+    //   console.log('gatewayProcess killed', gatewayProcess.killed)
+    //   gatewayProcess = null
+    // }
   }
 })
 

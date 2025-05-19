@@ -1,6 +1,6 @@
 {
   "name": "ai-tools",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A LLM client with shortcut",
   "main": "./out/main/index.js",
   "author": "elsejj",

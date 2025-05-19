@@ -7,7 +7,8 @@
       <Button label="复制其中代码" link @click="copyAsCode" class="" />
     </div>
     <ScrollPanel class="w-full h-[90%]">
-      <div ref="htmlNode" v-html="htmlSource" class="w-full wrap-break-word p-2"></div>
+      <div class="h-6"></div>
+      <div ref="htmlNode" v-html="htmlSource" class="w-full wrap-break-word px-2"></div>
       <div ref="bottomNode"></div>
     </ScrollPanel>
   </div>

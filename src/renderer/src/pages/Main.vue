@@ -217,12 +217,28 @@ async function llmToolCall(llmClient: OpenAI, request: OpenAI.Chat.Completions.C
     for (const toolCall of Object.values(tooCalls)) {
       llmProgress.value = `正在调用工具 ${toolCall.function?.name || ''}...`
       if (toolCall.function && toolCall.function.name) {
-        const result = await mcpCallTool(mcpClient, toolCall.function.name, toolCall.function.arguments || '{}');
-        toolMessage.push({
-          role: 'tool',
-          tool_call_id: toolCall.id || '',
-          content: result
-        })
+        try {
+          const result = await mcpCallTool(mcpClient, toolCall.function.name, toolCall.function.arguments || '{}');
+          toolMessage.push({
+            role: 'tool',
+            tool_call_id: toolCall.id || '',
+            content: result
+          })
+        } catch (e) {
+          llmProgress.value = `调用工具 ${toolCall.function?.name || ''} 失败`
+          const lines = ["# 错误", `${e}`, '# 函数', toolCall.function.name, '# 参数']
+          if (toolCall.function.arguments) {
+            const params = JSON.parse(toolCall.function.arguments)
+            for (const key in params) {
+              lines.push(`## ${key}`)
+              lines.push("```")
+              lines.push(params[key])
+              lines.push("```")
+            }
+          }
+          llmResult.value = lines.join("\n")
+          break
+        }
       }
     }
     if (toolMessage.length > 0) {

@@ -50,9 +50,12 @@ export async function mcpListTools(client: Client) : Promise<ChatCompletionTool[
 
 export async function mcpCallTool(client: Client, name: string, args: string) : Promise<any> {
   const parsedArgs = JSON.parse(args);
+  console.log("start calling tool", name, parsedArgs);
+ 
   const resp = await client.callTool({
     name,
     arguments: parsedArgs,
   });
+  console.log("Response from tool:", resp);
   return resp.content;
 }

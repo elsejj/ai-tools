@@ -8,7 +8,7 @@
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "oxc.enable": false,
+  "oxc.enable": true,
   "cSpell.words": [
     "Dexie",
     "sendkey"

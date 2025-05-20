@@ -1,4 +1,4 @@
-import { contextBridge, clipboard } from 'electron'
+import { contextBridge, clipboard, nativeImage } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 
 
@@ -6,6 +6,11 @@ import { electronAPI } from '@electron-toolkit/preload'
 // Custom APIs for renderer
 const api = {
   clipboard: clipboard,
+  copyImage: (dataUrl: string) => {
+    clipboard.clear()
+    const image = nativeImage.createFromDataURL(dataUrl)
+    clipboard.writeImage(image)
+  }
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

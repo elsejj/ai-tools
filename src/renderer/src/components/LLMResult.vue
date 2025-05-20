@@ -1,10 +1,11 @@
 <template>
   <div class="w-full h-full overflow-hidden p-2 bg-surface-0 rounded-md flex flex-col gap-2">
     <div class=" flex-none w-full h-10 flex items-center gap-2 justify-end">
-      <div class="flex-auto text-sm text-gray-500 transition duration-500 ease-in-out">{{ progress }}</div>
-      <Button label="复制纯文本" link @click="copyAsText" class="" />
-      <Button label="复制富文本" link @click="copyAsHtml" class="" />
-      <Button label="复制其中代码" link @click="copyAsCode" class="" />
+      <div class="flex-auto text-sm text-gray-500 transition duration-500 ease-in-out p-1">{{ progress }}</div>
+      <Button icon="iconify lucide-lab--copy-type w-6 h-6" outlined @click="copyAsText" />
+      <Button icon="iconify lucide-lab--copy-text w-6 h-6" outlined @click="copyAsHtml" />
+      <Button icon="iconify lucide-lab--copy-code w-6 h-6" outlined @click="copyAsCode" />
+      <Button icon="iconify lucide-lab--copy-image w-6 h-6" outlined @click="copyAsImage" />
     </div>
     <ScrollPanel class="w-full h-[90%]">
       <div class="h-6"></div>
@@ -31,6 +32,7 @@ import yamlLang from 'highlight.js/lib/languages/yaml'
 import cppLang from 'highlight.js/lib/languages/cpp'
 import shellLang from 'highlight.js/lib/languages/shell'
 import typescriptLang from 'highlight.js/lib/languages/typescript'
+import { toBlob, toPng } from 'html-to-image'
 
 import { useToast } from 'primevue/usetoast';
 
@@ -197,6 +199,26 @@ function copyAsCode() {
     detail: '代码已复制到剪贴板',
     life: 3000,
   });
+}
+
+async function copyAsImage() {
+  if (htmlNode.value === null) {
+    return
+  }
+
+  const dataUrl = await toPng(htmlNode.value, {
+    backgroundColor: '#ffffff',
+    quality: 1,
+  })
+
+  window.api.copyImage(dataUrl);
+
+  toast.add({
+    severity: 'success',
+    summary: '复制成功',
+    detail: '图片已复制到剪贴板',
+    life: 3000,
+  })
 }
 
 </script>

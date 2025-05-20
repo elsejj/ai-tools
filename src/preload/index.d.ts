@@ -4,7 +4,8 @@ declare global {
   interface Window {
     electron: ElectronAPI
     api: {
-      clipboard: Electron.Clipboard
+      clipboard: Electron.Clipboard,
+      copyImage: (dataUrl: string) => void,
     }
   }
 }

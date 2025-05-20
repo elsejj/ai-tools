@@ -11,6 +11,8 @@
   "oxc.enable": true,
   "cSpell.words": [
     "Dexie",
+    "iconify",
+    "lucide",
     "sendkey"
   ]
 }

@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @import "tailwindcss-primeui";
 
+@plugin "@iconify/tailwind4" {
+  prefixes: lucide-lab;
+}
+
 
 :root {
   --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, "Noto Sans Mono";

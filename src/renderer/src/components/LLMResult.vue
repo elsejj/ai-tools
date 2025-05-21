@@ -32,7 +32,7 @@ import yamlLang from 'highlight.js/lib/languages/yaml'
 import cppLang from 'highlight.js/lib/languages/cpp'
 import shellLang from 'highlight.js/lib/languages/shell'
 import typescriptLang from 'highlight.js/lib/languages/typescript'
-import { toBlob, toPng } from 'html-to-image'
+import { toPng } from 'html-to-image'
 
 import { useToast } from 'primevue/usetoast';
 

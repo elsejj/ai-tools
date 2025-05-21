@@ -76,9 +76,15 @@ async function onCtrlQ() {
     if (scale > 1) {
       scale = 1;
     }
-    const dataUrl = image.toDataURL({ scaleFactor: scale, })
-    currentImage.value = dataUrl
-    await invokeLLM()
+    const jpeg = image.resize({ width: width * scale, height: height * scale }).toJPEG(100);
+    const jpegBlob = new Blob([jpeg], { type: 'image/jpeg' });
+    const rd = new FileReader();
+    rd.readAsDataURL(jpegBlob);
+    rd.onload = async () => {
+      const dataUrl = rd.result as string;
+      currentImage.value = dataUrl
+      await invokeLLM()
+    }
     return
   }
   const text = window.api.clipboard.readText();

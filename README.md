@@ -8,11 +8,11 @@
 例如:
 
 - 在 `calibre` 电子书阅读器中, 选中一段文字, 按下 `Ctrl+Q`, 发送`翻译`请求, 让模型翻译选中的文字.
-![在 `calibre` 中翻译](./doc/screenshots/calibre.jpg)
+<img src="./doc/screenshots/calibre.jpg" alt="在 `calibre` 中翻译" width="70%">
 - 对一个包含表格的图片, 复制图片后, 按下 `Ctrl+Q`, 发送`表格提取`请求, 让模型将图片中的表格提取出来, 以便在电子表格中使用.
-![图片表格提取](./doc/screenshots/image_table.jpg)
+<img src="./doc/screenshots/image_table.jpg" alt="图片表格提取" width="70%">
 - 在任何支持选中复制的软件中, 选中一些内容, 按下 `Ctrl+Q`, 发送`答疑`请求, 让模型回答你对选中内容的进行解释.
-![答疑](./doc/screenshots/term.jpg)
+<img src="./doc/screenshots/term.jpg" alt="答疑" width="70%">
 
 ## MCP 支持
 
@@ -21,7 +21,7 @@
 - `Prompts` 功能, 如果 `MCP` 提供了 `Prompts` 功能, 在配置时会列出所有可用的 `Prompts`, 你可以选择一个作为默认的 `Prompt`
 - `Tools` 功能, 如果 `MCP` 提供了 `Tools` 功能, 在使用时, 这些功能会由模型自动选择是否使用.
 
-![MCP 支持](./doc/screenshots/mcp_use.jpg)
+<img src="./doc/screenshots/mcp_use.jpg" alt="MCP 支持" width="50%">
 
 # 使用方式
 
@@ -39,7 +39,7 @@
     按下 `Ctrl+Q`, 模型会逐个处理选中的文件, 并将结果保存到同一目录下 `JSON/Markdown/HTML` 文件中, 以便后续查看.
 
 每个工具实际是限定了系统提词的的配置, 在其他的软件中, 一般也称为`智能体`.
-![工具配置](./doc/screenshots/tools.jpg)
+<img src="./doc/screenshots/tools.jpg" alt="工具配置" width="50%">
 
 ## 模型配置
 
@@ -47,5 +47,5 @@
 
 如果要模型处理图片, 请设置为支持多模态的模型, 或者设置一个备选的视觉模型, 但一般来说, 纯视觉模型的效果不如多模态模型.
 
-![模型配置](./doc/screenshots/models.jpg)
+<img src="./doc/screenshots/models.jpg" alt="模型配置" width="50%">
 

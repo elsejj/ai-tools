@@ -1,7 +1,9 @@
 import test from 'ava'
 
-import { sum } from '../index.js'
+import { getClipboardFiles } from '../index.js'
 
-test('sum from native', (t) => {
-  t.is(sum(1, 2), 3)
+test('getClipboardFiles', async (t) => {
+  const files = getClipboardFiles()
+  console.log(files)
+  t.true(Array.isArray(files))
 })

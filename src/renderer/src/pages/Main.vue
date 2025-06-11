@@ -275,6 +275,28 @@ async function llmToolCall(llmClient: OpenAI, request: OpenAI.Chat.Completions.C
   if (mcpClient) {
     await mcpClient.close();
   }
+
+  await doPostAction()
+}
+
+
+async function doPostAction() {
+
+  let postAction = currentTool.value?.postAction || 'none';
+
+  switch (postAction) {
+    case 'copy':
+      window.api.clipboard.writeText(llmResult.value);
+      break;
+    case 'save':
+      break;
+    case 'none':
+      // do nothing
+      break;
+    default:
+      console.warn('未知的后处理动作:', postAction);
+      break;
+  }
 }
 
 

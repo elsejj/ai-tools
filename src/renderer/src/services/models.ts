@@ -6,14 +6,18 @@ export type AiTool = {
   name: string;
   /// The tool's system prompt send to the LLM
   systemPrompt: string;
+  /// The tool's user prompt template, used to generate the user prompt
+  userPrompt?: string;
   /// The mcp used in this tool
   mcp?: string;
   /// Response format
   responseFormat?: 'json' | 'html' | 'markdown';
+  /// Post action to perform after the tool is executed
+  postAction?: 'none' | 'copy' | 'save';
 }
 
 export function aiToolEqual(a: AiTool, b: AiTool): boolean {
-  return a.name === b.name && a.systemPrompt === b.systemPrompt && a.mcp === b.mcp && a.responseFormat === b.responseFormat;
+  return a.name === b.name && a.systemPrompt === b.systemPrompt && a.userPrompt === b.userPrompt && a.mcp === b.mcp && a.responseFormat === b.responseFormat && a.postAction === b.postAction;
 }
 
 export const DEFAULT_TOOLS: AiTool[] = [

@@ -13,8 +13,11 @@
       </Select>
       <div class="font-bold">名称</div>
       <InputText v-model="tool.name" class="w-full" placeholder="工具的名称" />
-      <div class="font-bold">提词</div>
+      <div class="font-bold">系统提词</div>
       <Textarea v-model="tool.systemPrompt" class="w-full" placeholder="请描述该工具的功能" rows="8" />
+      <div class="font-bold">用户提词<br />模板</div>
+      <Textarea v-model="tool.userPrompt" class="w-full" placeholder="用户提词的模板，其中的变量{input}会被替换成实际的输入，为空或不包含变量则会被忽略"
+        rows="4" />
       <div>输出格式</div>
       <div class="flex gap-2">
         <RadioButton v-model="tool.responseFormat" name="text" value="markdown" class="" />
@@ -23,6 +26,15 @@
         <label for="html" class="">HTML</label>
         <RadioButton v-model="tool.responseFormat" name="json" value="json" class="" />
         <label for="json" class="">JSON</label>
+      </div>
+      <div>后置操作</div>
+      <div class="flex gap-2">
+        <RadioButton v-model="tool.postAction" name="none" value="none" class="" />
+        <label for="none" class="">无</label>
+        <RadioButton v-model="tool.postAction" name="copy" value="copy" class="" />
+        <label for="copy" class="">复制</label>
+        <RadioButton v-model="tool.postAction" name="save" value="save" class="" />
+        <label for="save" class="">保存</label>
       </div>
       <div>MCP</div>
       <InputText v-model="tool.mcp" class="w-full" placeholder="MCP服务的地址" />
@@ -58,8 +70,10 @@ import { connectMcpClient } from '@renderer/services/mcp';
 const tool = ref<AiTool & { enabled: boolean }>({
   name: '',
   systemPrompt: '',
+  userPrompt: '',
   mcp: '',
   responseFormat: 'markdown',
+  postAction: 'none',
   enabled: false,
 })
 const errMsg = ref<string>('');
@@ -167,8 +181,10 @@ function createTool() {
   tool.value = {
     name: '',
     systemPrompt: '',
+    userPrompt: '',
     mcp: '',
     responseFormat: 'markdown',
+    postAction: 'none',
     enabled: false,
   }
 }

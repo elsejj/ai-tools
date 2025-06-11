@@ -21,7 +21,7 @@
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.2",
     "@electron-toolkit/utils": "^4.0.0",
-    "sendkey": "./sendkey/dist.win32_x64/"
+    "sendkey": "./sendkey/"
   },
   "devDependencies": {
     "@electron-toolkit/tsconfig": "^1.0.1",

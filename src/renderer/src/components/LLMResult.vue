@@ -35,6 +35,7 @@ import typescriptLang from 'highlight.js/lib/languages/typescript'
 import { toPng } from 'html-to-image'
 
 import { useToast } from 'primevue/usetoast';
+import { removeFirstMarkdownQuote, removeQuote } from '@renderer/utils/llmResult'
 
 
 
@@ -100,30 +101,14 @@ const marked = new Marked(
   }),
 );
 
-function removeQuote(str: string) {
-  let startPos = str.indexOf('```')
-  if (startPos === -1) {
-    return str
-  }
-  const brPos = str.indexOf('\n', startPos)
-  if (brPos === -1) {
-    startPos += 3
-  } else {
-    startPos = brPos + 1
-  }
-  const endPos = str.indexOf('```', startPos)
-  if (endPos === -1) {
-    return str.substring(startPos)
-  }
-  return str.substring(startPos, endPos)
-}
+
 
 const htmlSource = computed(() => {
   switch (props.format) {
     case 'html':
       return removeQuote(props.text);
     default:
-      return marked.parse(props.text);
+      return marked.parse(removeFirstMarkdownQuote(props.text));
   }
 });
 

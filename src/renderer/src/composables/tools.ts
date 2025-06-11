@@ -20,6 +20,14 @@ export const useTools = defineStore('tools', () => {
         await dbService.addTool(tool)
       }
     }
+    tools.value.forEach(tool => {
+      if (!tool.postAction) {
+        tool.postAction = 'none'
+      }
+      if (!tool.userPrompt) {
+        tool.userPrompt = ''
+      }
+    })
   }
 
   async function add(tool: AiTool, update: boolean = false) {

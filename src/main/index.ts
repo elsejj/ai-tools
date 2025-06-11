@@ -4,7 +4,7 @@ import { WindowManager } from './manager/windowManager'
 import { sendKeys } from 'sendkey'
 import { join } from 'path'
 import { spawn, ChildProcessWithoutNullStreams  } from 'child_process'
-import { existsSync } from 'fs'
+import { existsSync, mkdirSync } from 'fs'
 
 
 let gatewayProcess: ChildProcessWithoutNullStreams | null = null
@@ -44,6 +44,15 @@ function stopGateway() {
 app.whenReady().then(() => {
   // Set app user model id for windows
   electronApp.setAppUserModelId('com.ai-tools')
+
+  const llmResponsesDir = app.getPath('userData') + '/llmResponses'
+
+  // ensure the user data directory exists
+  if (!existsSync(llmResponsesDir)) {
+    console.log('Creating user data directory:', llmResponsesDir)
+    mkdirSync(llmResponsesDir, { recursive: true })
+  }
+
 
   WindowManager.getInstance().createWindow()
 

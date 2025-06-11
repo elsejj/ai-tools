@@ -236,6 +236,8 @@ function toAiTool(tool: any): AiTool {
   return {
     name: tool.name,
     systemPrompt: tool.systemPrompt,
+    userPrompt: tool.userPrompt,
+    postAction: tool.postAction,
     mcp: tool.mcp,
     responseFormat: tool.responseFormat,
   }

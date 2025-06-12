@@ -17,7 +17,7 @@ export type AiTool = {
 }
 
 export function aiToolEqual(a: AiTool, b: AiTool): boolean {
-  return a.name === b.name && a.systemPrompt === b.systemPrompt && a.userPrompt === b.userPrompt && a.mcp === b.mcp && a.responseFormat === b.responseFormat && a.postAction === b.postAction;
+  return a.name === b.name && a.systemPrompt === b.systemPrompt && a.userPrompt === b.userPrompt && a.mcp === b.mcp && a.responseFormat === b.responseFormat && a.postAction === b.postAction ;
 }
 
 export const DEFAULT_TOOLS: AiTool[] = [
@@ -71,8 +71,10 @@ export type LLMConfig = {
   baseUrl: string;
   /// The LLM model
   model: string;
+  reasoningEffort?: 'low' | 'medium' | 'high' | 'none' | 'auto' | '';
   /// The vision model
   visionModel?: string;
+  visionReasoningEffort?: 'low' | 'medium' | 'high' | 'none' | 'auto' | '';
   /// The LLM provider
   provider?: string;
 }

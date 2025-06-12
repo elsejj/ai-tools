@@ -2,6 +2,9 @@
   <div class="w-full h-full overflow-hidden p-2 bg-surface-0 rounded-md flex flex-col gap-2">
     <div class=" flex-none w-full h-10 flex items-center gap-2 justify-end">
       <div class="flex-auto text-sm text-gray-500 transition duration-500 ease-in-out p-1">{{ progress }}</div>
+      <div class="text-sm text-primary-700 ">
+        {{ llmName }}
+      </div>
       <Button icon="iconify lucide-lab--copy-type w-6 h-6" outlined @click="copyAsText" />
       <Button icon="iconify lucide-lab--copy-text w-6 h-6" outlined @click="copyAsHtml" />
       <Button icon="iconify lucide-lab--copy-code w-6 h-6" outlined @click="copyAsCode" />
@@ -50,6 +53,10 @@ const props = defineProps({
     required: false,
   },
   progress: {
+    type: String,
+    default: '',
+  },
+  llmName: {
     type: String,
     default: '',
   },

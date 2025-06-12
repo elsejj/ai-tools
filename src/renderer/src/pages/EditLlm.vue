@@ -10,8 +10,38 @@
       <Password v-model="llm.apiKey" inputClass="w-full" placeholder="API密钥" toggleMask />
       <div class="font-bold">模型</div>
       <InputText v-model="llm.model" class="w-full" placeholder="模型名称" />
+      <div>思考力度</div>
+      <div class="flex gap-2">
+        <RadioButton v-model="llm.reasoningEffort" name="none" value="" class="" />
+        <label for="none" class="">默认</label>
+        <RadioButton v-model="llm.reasoningEffort" name="none" value="none" class="" />
+        <label for="none" class="">无</label>
+        <RadioButton v-model="llm.reasoningEffort" name="low" value="low" class="" />
+        <label for="low" class="">低</label>
+        <RadioButton v-model="llm.reasoningEffort" name="medium" value="medium" class="" />
+        <label for="medium" class="">中</label>
+        <RadioButton v-model="llm.reasoningEffort" name="high" value="high" class="" />
+        <label for="high" class="">高</label>
+        <RadioButton v-model="llm.reasoningEffort" name="auto" value="auto" class="" />
+        <label for="auto" class="">自动</label>
+      </div>
       <div>视觉模型</div>
       <InputText v-model="llm.visionModel" class="w-full" placeholder="视觉模型名称, 主模型不支持视觉的备选" />
+      <div>思考力度</div>
+      <div class="flex gap-2">
+        <RadioButton v-model="llm.visionReasoningEffort" name="none" value="" class="" />
+        <label for="none" class="">默认</label>
+        <RadioButton v-model="llm.visionReasoningEffort" name="none" value="none" class="" />
+        <label for="none" class="">无</label>
+        <RadioButton v-model="llm.visionReasoningEffort" name="low" value="low" class="" />
+        <label for="low" class="">低</label>
+        <RadioButton v-model="llm.visionReasoningEffort" name="medium" value="medium" class="" />
+        <label for="medium" class="">中</label>
+        <RadioButton v-model="llm.visionReasoningEffort" name="high" value="high" class="" />
+        <label for="high" class="">高</label>
+        <RadioButton v-model="llm.visionReasoningEffort" name="auto" value="auto" class="" />
+        <label for="auto" class="">自动</label>
+      </div>
       <div>服务商</div>
       <InputText v-model="llm.provider" class="w-full" placeholder="服务商" />
     </div>

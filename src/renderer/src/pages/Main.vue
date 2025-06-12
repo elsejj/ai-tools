@@ -5,7 +5,8 @@
       <InputText v-model="currentText" class="w-full flex-auto" placeholder="可以输入些什么然后回车，但更便捷的是在你当前软件中选中然后按下 Ctrl+Q"
         @keydown.enter="onEditSend" />
     </div>
-    <LLMResult :text="llmResult" :format="currentTool?.responseFormat" :progress="llmProgress" class="flex-auto">
+    <LLMResult :text="llmResult" :format="currentTool?.responseFormat" :progress="llmProgress" :llm-name="llmName"
+      class="flex-auto">
     </LLMResult>
 
   </div>
@@ -29,6 +30,7 @@ const currentText = ref('');
 const currentImage = ref('');
 const llmResult = ref('');
 const llmProgress = ref('');
+const llmName = ref('');
 const settings = useSettings();
 const tools = useTools();
 
@@ -146,6 +148,7 @@ async function requestLLM(userPrompt: string, imageUrl: string = ''): Promise<st
   });
 
   const model = imageUrl && settings.llm.visionModel ? settings.llm.visionModel : settings.llm.model
+  const modelReasoningEffort = imageUrl && settings.llm.visionReasoningEffort ? settings.llm.visionReasoningEffort : settings.llm.reasoningEffort
   const responseFormat = `请以 ${currentTool.value?.responseFormat || "markdown"} 格式返回结果`
 
   const request: ChatCompletionCreateParamsStreaming = {
@@ -156,6 +159,11 @@ async function requestLLM(userPrompt: string, imageUrl: string = ''): Promise<st
       include_usage: true,
     },
     response_format: currentTool.value?.responseFormat === 'json' ? { 'type': 'json_object' } : undefined,
+  }
+
+  if (modelReasoningEffort) {
+    //@ts-ignore
+    request.reasoning_effort = modelReasoningEffort;
   }
 
   if (imageUrl) {
@@ -218,6 +226,9 @@ async function llmToolCall(llmClient: OpenAI, request: OpenAI.Chat.Completions.C
     const tooCalls: Record<number, OpenAI.Chat.Completions.ChatCompletionChunk.Choice.Delta.ToolCall> = {}
 
     for await (const chunk of stream) {
+      if (chunk.model?.length > 0 && llmName.value !== chunk.model) {
+        llmName.value = chunk.model;
+      }
       for (const choice of chunk.choices) {
         if (choice.delta.content) {
           llmProgress.value = `正在生成...`

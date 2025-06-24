@@ -1,19 +1,37 @@
 <template>
   <div class="p-2 flex flex-col gap-2">
-    <div class="w-full gap-2 p-2 bg-surface-900 rounded-md flex justify-end items-center">
-      <Button label="导入" severity="info" text @click="importTools" />
-      <Button label="导出所有" severity="info" text @click="exportTools()" />
-      <Button label="导出当前" severity="info" text @click="exportTools(tool.name)" />
+    <div class="w-full gap-2 p-2 bg-primary-700 rounded-md flex justify-end items-center">
+      <Button
+        label="导入"
+        severity="info"
+        text
+        @click="importTools"
+        class="text-surface-200 hover:text-primary-700"
+      />
+      <Button
+        label="导出所有"
+        severity="info"
+        text
+        @click="exportTools()"
+        class="text-surface-200 hover:text-primary-700"
+      />
+      <Button
+        label="导出当前"
+        severity="info"
+        text
+        @click="exportTools(tool.name)"
+        class="text-surface-200 hover:text-primary-700"
+      />
       <span class="flex-auto"></span>
       <Button
         label="返回"
         @click="$router.back()"
         link
         severity="secondary"
-        class="text-surface-100"
+        class="text-surface-200"
       />
     </div>
-    <div class="grid grid-cols-[5rem_1fr] items-center w-full gap-2 p-2 bg-gray-100 rounded-md">
+    <div class="grid grid-cols-[5rem_1fr] items-center w-full gap-2 p-2 bg-surface-100 rounded-md">
       <div>选择工具</div>
       <Select
         :options="toolsList"
@@ -25,7 +43,7 @@
         @change="onToolSelected"
       >
         <template #option="{ option }">
-          <span :class="option.enabled ? 'text-green-500' : 'text-black'">{{ option.name }}</span>
+          <span :class="option.enabled ? 'text-primary' : 'text-surface'">{{ option.name }}</span>
         </template>
       </Select>
       <div class="font-bold">名称</div>

@@ -23,4 +23,7 @@ declare module 'vue' {
     Tools: typeof import('./src/components/Tools.vue')['default']
     Versions: typeof import('./src/components/Versions.vue')['default']
   }
+  export interface GlobalDirectives {
+    Tooltip: typeof import('primevue/tooltip')['default']
+  }
 }

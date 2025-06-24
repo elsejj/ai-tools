@@ -1,7 +1,7 @@
 <template>
   <div class="p-2 flex flex-col gap-2">
-    <div class="w-full gap-2 p-2 bg-surface-900 rounded-md flex justify-end items-center">
-      <Button label="返回" @click="$router.back()" link severity="help" class="text-surface-100" />
+    <div class="w-full gap-2 p-2 bg-primary-700 rounded-md flex justify-end items-center">
+      <Button label="返回" @click="$router.back()" link severity="help" class="text-surface-200" />
     </div>
     <div class="grid grid-cols-[4rem_1fr] items-center w-full gap-2 p-2 bg-gray-100 rounded-md">
       <div class="font-bold">地址</div>

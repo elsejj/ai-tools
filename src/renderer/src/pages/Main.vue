@@ -3,6 +3,7 @@
     <Tools />
     <div class="flex w-full">
       <InputText
+        id="inputText"
         v-model="currentText"
         class="w-full flex-auto"
         placeholder="可以输入些什么然后回车，但更便捷的是在你当前软件中选中然后按下 Ctrl+Q"
@@ -394,6 +395,7 @@ async function onAppShortcut(event: KeyboardEvent) {
     const index = parseInt(event.key) - 1
     if (index >= 0 && index < settings.tools.enabled.length) {
       settings.tools.activated = settings.tools.enabled[index]
+      document.getElementById('inputText')?.focus()
     }
   }
 }

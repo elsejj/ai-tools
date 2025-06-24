@@ -7,26 +7,50 @@
       <div class="text-sm text-primary-700">
         {{ llmName }}
       </div>
-      <Button icon="icon-[lucide-lab--copy-type] w-6 h-6" outlined @click="copyAsText" />
-      <Button icon="icon-[lucide-lab--copy-text] w-6 h-6" outlined @click="copyAsHtml" />
-      <Button icon="icon-[lucide-lab--copy-code] w-6 h-6" outlined @click="copyAsCode" />
-      <Button icon="icon-[lucide-lab--copy-image] w-6 h-6" outlined @click="copyAsImage" />
+      <Button
+        icon="icon-[lucide-lab--copy-type] w-6 h-6"
+        outlined
+        @click="copyAsText"
+        v-tool-tip="'复制为文本'"
+      />
+      <Button
+        icon="icon-[lucide-lab--copy-text] w-6 h-6"
+        outlined
+        @click="copyAsHtml"
+        v-tool-tip="'复制为HTML'"
+      />
+      <Button
+        icon="icon-[lucide-lab--copy-code] w-6 h-6"
+        outlined
+        @click="copyAsCode"
+        v-tool-tip="'复制代码'"
+      />
+      <Button
+        icon="icon-[lucide-lab--copy-image] w-6 h-6"
+        outlined
+        @click="copyAsImage"
+        v-tool-tip="'复制为图片'"
+      />
     </div>
     <ScrollPanel class="w-full h-[90%]">
       <div class="h-6"></div>
-      <div
-        id="llm-result"
-        ref="htmlNode"
-        v-html="htmlSource"
-        class="w-full wrap-break-word px-2"
-      ></div>
+      <div id="llm-result">
+        <div ref="htmlNode" v-html="htmlSource" class="w-full wrap-break-word px-2"></div>
+        <div class="text-right" :style="{ visibility: showFooter }">
+          <span class="ml-2">来自</span>
+          <span class="text-primary">{{ props.llmName }}</span>
+          <span>在</span>
+          <span class="text-primary font-bold">ai-tools</span>
+          <span>的回答</span>
+        </div>
+      </div>
       <div ref="bottomNode"></div>
     </ScrollPanel>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { computed, onUpdated, useTemplateRef } from 'vue'
+import { computed, onUpdated, ref, useTemplateRef } from 'vue'
 import { Marked } from 'marked'
 import { markedHighlight } from 'marked-highlight'
 import hljs from 'highlight.js'
@@ -69,6 +93,7 @@ const props = defineProps({
 const htmlNode = useTemplateRef('htmlNode')
 const toast = useToast()
 const bottomNode = useTemplateRef('bottomNode')
+const showFooter = ref<'hidden' | 'visible'>('hidden')
 
 onUpdated(() => {
   if (bottomNode.value) {
@@ -193,17 +218,19 @@ function copyAsCode() {
 }
 
 async function copyAsImage() {
-  if (htmlNode.value === null) {
+  const node = document.getElementById('llm-result')
+  if (node === null) {
     return
   }
 
-  const node = htmlNode.value
-
   const fontSize = node.style.fontSize
   const padding = node.style.padding
+  const lineHeight = node.style.lineHeight
+  showFooter.value = 'visible'
 
   node.style.fontSize = '20px'
   node.style.padding = '4rem 1rem 2rem 2rem'
+  node.style.lineHeight = '28px'
   const dataUrl = await toPng(node, {
     backgroundColor: '#ffffff',
     quality: 1,
@@ -212,6 +239,8 @@ async function copyAsImage() {
 
   node.style.fontSize = fontSize
   node.style.padding = padding
+  node.style.lineHeight = lineHeight
+  showFooter.value = 'hidden'
 
   window.api.copyImage(dataUrl)
 

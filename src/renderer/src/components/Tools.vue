@@ -1,10 +1,11 @@
 <template>
   <div
-    class="grid grid-cols-4 md:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-12 gap-2 w-full p-2 bg-surface-100 rounded-md"
+    class="grid grid-cols-4 md:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-12 gap-2 w-full p-2 bg-surface rounded-md"
   >
     <div
       v-for="(tool, i) in settings.tools.enabled"
-      class="flex items-center gap-2 p-1 h-8 bg-surface-50 shadow-gray-300 shadow-sm rounded-md hover:shadow-md transition-shadow duration-300 transform"
+      class="flex items-center gap-2 p-1 h-8 bg-surface-50 hover:shadow-primary rounded-md hover:shadow-md transition-shadow duration-300 transform"
+      :class="[tool == settings.tools.activated ? 'shadow-primary shadow-sm' : '']"
       :key="tool"
     >
       <RadioButton
@@ -24,14 +25,14 @@
         label="工具"
         @click="$router.push({ path: '/tools' })"
         link
-        class="text-primary-500 p-1"
+        class="text-primary p-1"
         :dt="toolButton"
       />
       <Button
         label="模型"
         @click="$router.push({ path: '/llm' })"
         link
-        class="text-primary-500 p-1"
+        class="text-primary p-1"
         :dt="toolButton"
       />
     </div>

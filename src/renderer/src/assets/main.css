@@ -1,6 +1,5 @@
 @import './base.css';
 
-
 .easy-table {
   border-collapse: collapse;
   max-width: 100%;
@@ -24,4 +23,56 @@
 
 .easy-table tr:hover {
   background-color: #f2f2f2;
+}
+
+#llm-result {
+  padding: 0.5rem 1rem;
+}
+
+#llm-result p,
+li {
+  margin-bottom: 0.5rem;
+}
+
+#llm-result h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: 1.2rem;
+  margin-top: 0.8rem;
+}
+
+#llm-result table {
+  border-collapse: collapse;
+  max-width: 100%;
+  margin: auto;
+}
+
+#llm-result th {
+  background-color: #f2f2f2;
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+#llm-result td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#llm-result tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#llm-result tr:hover {
+  background-color: #f2f2f2;
+}
+
+#llm-result pre {
+  background-color: #f2f2f2;
+  border-radius: 4px;
+  padding: 1rem 0.5rem 1rem 0.5rem;
+  margin: 1rem 1rem;
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="p-2 flex flex-col gap-2">
-    <div class="w-full gap-2 p-2 bg-primary-900 rounded-md flex justify-end items-center">
+    <div class="w-full gap-2 p-2 bg-surface-900 rounded-md flex justify-end items-center">
       <Button label="返回" @click="$router.back()" link severity="help" class="text-surface-100" />
     </div>
     <div class="grid grid-cols-[4rem_1fr] items-center w-full gap-2 p-2 bg-gray-100 rounded-md">
@@ -26,7 +26,11 @@
         <label for="auto" class="">自动</label>
       </div>
       <div>视觉模型</div>
-      <InputText v-model="llm.visionModel" class="w-full" placeholder="视觉模型名称, 主模型不支持视觉的备选" />
+      <InputText
+        v-model="llm.visionModel"
+        class="w-full"
+        placeholder="视觉模型名称, 主模型不支持视觉的备选"
+      />
       <div>思考力度</div>
       <div class="flex gap-2">
         <RadioButton v-model="llm.visionReasoningEffort" name="none" value="" class="" />
@@ -56,34 +60,31 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
 
-import { useSettings } from '@renderer/composables/settings';
-import { useToast } from 'primevue/usetoast';
+import { useSettings } from '@renderer/composables/settings'
+import { useToast } from 'primevue/usetoast'
 
-const errMsg = ref<string>('');
-const { llm } = useSettings();
-const toast = useToast();
-
+const errMsg = ref<string>('')
+const { llm } = useSettings()
+const toast = useToast()
 
 async function saveLlm() {
-  errMsg.value = '';
+  errMsg.value = ''
   if (!llm.baseUrl) {
-    errMsg.value = '请填写API地址';
-    return;
+    errMsg.value = '请填写API地址'
+    return
   }
   if (!llm.model) {
-    errMsg.value = '请填写模型名称';
-    return;
+    errMsg.value = '请填写模型名称'
+    return
   }
 
   toast.add({
     severity: 'success',
     summary: '成功',
     detail: '模型配置已保存',
-    life: 3000,
+    life: 3000
   })
 }
-
-
 </script>

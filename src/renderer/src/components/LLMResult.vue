@@ -7,14 +7,19 @@
       <div class="text-sm text-primary-700">
         {{ llmName }}
       </div>
-      <Button icon="iconify lucide-lab--copy-type w-6 h-6" outlined @click="copyAsText" />
-      <Button icon="iconify lucide-lab--copy-text w-6 h-6" outlined @click="copyAsHtml" />
-      <Button icon="iconify lucide-lab--copy-code w-6 h-6" outlined @click="copyAsCode" />
-      <Button icon="iconify lucide-lab--copy-image w-6 h-6" outlined @click="copyAsImage" />
+      <Button icon="icon-[lucide-lab--copy-type] w-6 h-6" outlined @click="copyAsText" />
+      <Button icon="icon-[lucide-lab--copy-text] w-6 h-6" outlined @click="copyAsHtml" />
+      <Button icon="icon-[lucide-lab--copy-code] w-6 h-6" outlined @click="copyAsCode" />
+      <Button icon="icon-[lucide-lab--copy-image] w-6 h-6" outlined @click="copyAsImage" />
     </div>
     <ScrollPanel class="w-full h-[90%]">
       <div class="h-6"></div>
-      <div ref="htmlNode" v-html="htmlSource" class="w-full wrap-break-word px-2"></div>
+      <div
+        id="llm-result"
+        ref="htmlNode"
+        v-html="htmlSource"
+        class="w-full wrap-break-word px-2"
+      ></div>
       <div ref="bottomNode"></div>
     </ScrollPanel>
   </div>
@@ -192,10 +197,21 @@ async function copyAsImage() {
     return
   }
 
-  const dataUrl = await toPng(htmlNode.value, {
+  const node = htmlNode.value
+
+  const fontSize = node.style.fontSize
+  const padding = node.style.padding
+
+  node.style.fontSize = '20px'
+  node.style.padding = '4rem 1rem 2rem 2rem'
+  const dataUrl = await toPng(node, {
     backgroundColor: '#ffffff',
-    quality: 1
+    quality: 1,
+    pixelRatio: 2
   })
+
+  node.style.fontSize = fontSize
+  node.style.padding = padding
 
   window.api.copyImage(dataUrl)
 

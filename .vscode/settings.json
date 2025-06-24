@@ -19,6 +19,7 @@
     "Dexie",
     "iconify",
     "lucide",
+    "modelcontextprotocol",
     "sendkey"
   ]
 }

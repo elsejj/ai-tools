@@ -1,6 +1,7 @@
 
-import os from 'node:os'
-import { spawnSync } from 'node:child_process'
+
+const os = require('node:os')
+const { spawnSync } = require('node:child_process')
 
 
 const platform = os.platform()

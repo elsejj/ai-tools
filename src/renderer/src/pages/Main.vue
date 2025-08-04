@@ -30,7 +30,7 @@ import { useTools } from '@renderer/composables/tools'
 import { OpenAI } from 'openai'
 import { ChatCompletionCreateParamsStreaming } from 'openai/resources/index'
 import { connectMcpClient, mcpCallTool, mcpListTools } from '@renderer/services/mcp'
-import { Client as McpClient } from '@modelcontextprotocol/sdk/client/index'
+import { Client as McpClient } from '@modelcontextprotocol/sdk/client/index.js'
 import { removeQuote } from '@renderer/utils/llmResult'
 
 const currentText = ref('')
@@ -78,6 +78,7 @@ async function toLlmImageDataURL(image: Electron.NativeImage): Promise<string> {
     scale = 1
   }
   const jpeg = image.resize({ width: width * scale, height: height * scale }).toJPEG(100)
+  // @ts-ignore
   const jpegBlob = new Blob([jpeg], { type: 'image/jpeg' })
   return new Promise((resolve) => {
     const rd = new FileReader()

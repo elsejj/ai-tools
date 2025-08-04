@@ -20,7 +20,10 @@
     "iconify",
     "lucide",
     "modelcontextprotocol",
+    "napi",
     "primeuix",
-    "sendkey"
+    "sendkey",
+    "ydotool",
+    "ydotoold"
   ]
 }

@@ -310,7 +310,9 @@ if (!nativeBinding) {
   throw new Error(`Failed to load native binding`)
 }
 
-const { sendKeys, getClipboardFiles } = nativeBinding
+const { sendKeys, getClipboardFiles, initializeSendkey, finalizeSendkey } = nativeBinding
 
 module.exports.sendKeys = sendKeys
 module.exports.getClipboardFiles = getClipboardFiles
+module.exports.initializeSendkey = initializeSendkey
+module.exports.finalizeSendkey = finalizeSendkey

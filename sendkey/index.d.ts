@@ -5,3 +5,13 @@
 
 export declare function sendKeys(keys: string): void
 export declare function getClipboardFiles(): Array<string>
+/**
+ * give a chance to the module to initialize itself
+ * for linux, it start the ydotool daemon
+ */
+export declare function initializeSendkey(): void
+/**
+ * give a chance to the module to finalize itself
+ * for linux, it stop the ydotool daemon
+ */
+export declare function finalizeSendkey(): void

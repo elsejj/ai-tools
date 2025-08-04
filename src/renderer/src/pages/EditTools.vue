@@ -113,7 +113,7 @@ import { useTools } from '@renderer/composables/tools'
 import { useSettings } from '@renderer/composables/settings'
 import { useRoute } from 'vue-router'
 import { useToast } from 'primevue/usetoast'
-import { Client as McpClient } from '@modelcontextprotocol/sdk/client/index'
+import { Client as McpClient } from '@modelcontextprotocol/sdk/client/index.js'
 import { connectMcpClient } from '@renderer/services/mcp'
 
 const tool = ref<AiTool & { enabled: boolean }>({
@@ -178,6 +178,10 @@ watch(
           mcpClient.value.close()
         }
         mcpClient.value = await connectMcpClient(newVal, 'sse')
+        if (!mcpClient.value) {
+          console.debug('connect mcp failed')
+          return
+        }
         const prompts = await mcpClient.value.listPrompts()
         mcpPrompts.value = prompts.prompts
           .map((prompt) => {

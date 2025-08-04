@@ -37,7 +37,7 @@ export class WindowManager {
       autoHideMenuBar: true,
       show: false,
       icon: icon,
-      //...(process.platform === 'linux' ? { icon } : {}),
+      ...(process.platform === 'linux' ? { icon } : {}),
       webPreferences: {
         preload: join(__dirname, '../preload/index.js'),
         sandbox: false,
@@ -49,7 +49,7 @@ export class WindowManager {
     });
 
 
-    this._mainWindow.setAlwaysOnTop(true);
+    //this._mainWindow.setAlwaysOnTop(true);
 
 
     if (is.dev && process.env['ELECTRON_RENDERER_URL']) {

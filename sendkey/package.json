@@ -8,7 +8,8 @@
     "triples": {
       "defaults": false,
       "additional": [
-        "x86_64-pc-windows-msvc"
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu"
       ]
     }
   },
@@ -31,8 +32,5 @@
     "test": "ava",
     "universal": "napi universal",
     "version": "napi version"
-  },
-  "optionalDependencies": {
-    "sendkey-win32-x64-msvc": "0.0.0"
   }
 }

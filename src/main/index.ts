@@ -1,7 +1,7 @@
 import { app, BrowserWindow, ipcMain, globalShortcut, } from 'electron'
 import { electronApp} from '@electron-toolkit/utils'
 import { WindowManager } from './manager/windowManager'
-import { sendKeys } from 'sendkey'
+import { sendKeys, finalizeSendkey } from 'sendkey'
 import { join } from 'path'
 import { spawn, ChildProcessWithoutNullStreams  } from 'child_process'
 import { existsSync, mkdirSync } from 'fs'
@@ -36,6 +36,8 @@ function stopGateway() {
     console.log('gatewayProcess killed', gatewayProcess.killed)
     gatewayProcess = null
   }
+  console.log('sendkey finalized successfully')
+  finalizeSendkey()
 }
 
 // This method will be called when Electron has finished

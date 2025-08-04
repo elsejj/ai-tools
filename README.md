@@ -49,3 +49,15 @@
 
 <img src="./doc/screenshots/models.jpg" alt="模型配置" width="50%">
 
+## 其他使用说明
+
+### Linux
+
+在 Linux 下发送键盘事件并不容易，Linux 桌面环境很复杂，为了最大兼任各种桌面系统(X11/Wayland等)，使用 [ydotool](https://github.com/ReimuNotMoe/ydotool) 来发送键盘事件。
+
+1. 请先安装新版本的 `ydotool`, 版本号大于 1.0 (Ubuntu APT 的版本比较低， 建议从项目主页手动安装)
+2. 确保 `ydotoold` 放置在 `sudo` 可以找到的路径中，一般可放置在 `/usr/local/bin` 里，在终端中输入 `sudo ydotoold -V`, 如果输出了版本号，则为正常。
+3. 将 `ydotool` 放置在用户路径中，如 `$HOME/.local/bin` 中，亦可放置在 `/usr/local/bin` 中，在终端中输入 `ydotool --help` 有正常的输出，则为正常。
+4. 安装包自带的 `sendkey` 最低需要 Ubuntu 24.04, 即 2.42 版本的 libc, 如使用更低版本，需要自行编译打包。
+
+

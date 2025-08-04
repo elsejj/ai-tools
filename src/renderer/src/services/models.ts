@@ -92,6 +92,8 @@ export type LLMConfig = {
   visionReasoningEffort?: 'low' | 'medium' | 'high' | 'none' | 'auto' | ''
   /// The LLM provider
   provider?: string
+  /// The LLM need visit from proxy
+  proxy?: string
 }
 
 export type AllConfig = {

@@ -75,6 +75,26 @@ app.whenReady().then(() => {
   // start the gateway and listen for the restart event
   restartGateway()
   ipcMain.on('restartGateway', restartGateway)
+  ipcMain.on('setProxy', (_event, proxy) => {
+    const mainWindow = WindowManager.getInstance().mainWindow
+    if (mainWindow) {
+      if (proxy) {
+        mainWindow.webContents.session.setProxy({ mode: 'fixed_servers', proxyRules: proxy })
+          .then(() => {
+            console.log('Proxy set to:', proxy)
+          })
+          .catch((error) => {
+            console.error('Failed to set proxy:', error)
+          })
+      }else{
+        mainWindow.webContents.session.setProxy({ mode: 'system' }).then(() => {
+          console.log('Proxy reset to system settings')
+        }).catch((error) => {
+          console.error('Failed to reset proxy:', error)
+        })
+      }
+    }
+  })
 
 
   app.on('activate', function () {

@@ -48,6 +48,8 @@ onMounted(() => {
   ipcRenderer.on('CtrlQ', onCtrlQ)
 
   document.addEventListener('keydown', onAppShortcut, { signal: keydownAborter.signal })
+
+  ipcRenderer.postMessage('setProxy', settings.llm.proxy)
 })
 
 onUnmounted(() => {

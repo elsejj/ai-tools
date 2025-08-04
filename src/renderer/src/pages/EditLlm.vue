@@ -8,6 +8,8 @@
       <InputText v-model="llm.baseUrl" class="w-full" placeholder="API地址" />
       <div class="font-bold">密钥</div>
       <Password v-model="llm.apiKey" inputClass="w-full" placeholder="API密钥" toggleMask />
+      <div>代理</div>
+      <InputText v-model="llm.proxy" class="w-full" placeholder="如果访问模型地址需要代理，请设置代理地址" />
       <div class="font-bold">模型</div>
       <InputText v-model="llm.model" class="w-full" placeholder="模型名称" />
       <div>思考力度</div>
@@ -79,6 +81,9 @@ async function saveLlm() {
     errMsg.value = '请填写模型名称'
     return
   }
+
+  const { ipcRenderer } = window.electron
+  ipcRenderer.postMessage("setProxy", llm.proxy)
 
   toast.add({
     severity: 'success',

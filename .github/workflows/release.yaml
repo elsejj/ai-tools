@@ -22,7 +22,8 @@ jobs:
         with:
           node-version: 22
       - run: npm install
-      - run: node build.js
+      - name: Build
+        run: npm run build:auto
       - name: Release
         uses: softprops/action-gh-release@v2
         if: github.ref_type == 'tag'

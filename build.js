@@ -5,7 +5,6 @@ const platform = os.platform()
 
 switch (platform) {
   case 'win32':
-    console.log('Building for Windows...')
     spawnSync('cmd', ['/c', 'npm run build:win'], { stdio: 'inherit' })
     break
   case 'linux':

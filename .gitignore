@@ -9,3 +9,4 @@ bun.lock
 llm-gateway
 sendkey/target
 sendkey/cargo.lock
+android

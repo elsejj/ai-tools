@@ -1,14 +1,11 @@
-
-
 const os = require('node:os')
 const { spawnSync } = require('node:child_process')
-
 
 const platform = os.platform()
 
 switch (platform) {
   case 'win32':
-    spawnSync('npm', ['run', 'build:win'], { stdio: 'inherit' })
+    spawnSync('cmd', ['/c', 'npm run build:win'], { stdio: 'inherit' })
     break
   case 'linux':
     spawnSync('npm', ['run', 'build:linux'], { stdio: 'inherit' })

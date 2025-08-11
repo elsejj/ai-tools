@@ -1,9 +1,8 @@
-import Dexie, { type EntityTable } from 'dexie';
-import { AiTool, AllConfig, Config } from './models';
-
+import Dexie, { type EntityTable } from 'dexie'
+import { AiTool, AllConfig, Config } from './models'
 
 type AnyConfig = {
-  name: string;
+  name: string
   value: any
 }
 
@@ -11,36 +10,30 @@ const db = new Dexie('AiTools') as Dexie & {
   tools: EntityTable<
     AiTool,
     'name' // primary key "id" (for the typings only)
-  >;
+  >
   config: EntityTable<
     AnyConfig,
     'name' // primary key "name" for the config
-  >;  
-  
-};
+  >
+}
 
 // Schema declaration:
 db.version(1).stores({
   tools: 'name', // primary key "id" (for the runtime!)
   config: 'name' // primary key "name" for the config
-});
-
-
+})
 
 class DbService {
-
   getTools(filter: (tool: AiTool) => boolean): Promise<AiTool[]> {
-    return db.tools
-      .filter(filter)
-      .toArray();
+    return db.tools.filter(filter).toArray()
   }
 
   getTool(name: string): Promise<AiTool | undefined> {
-    return db.tools.get(name);
+    return db.tools.get(name)
   }
 
   setTool(name: string, tool: Partial<AiTool>): Promise<number> {
-    return db.tools.update(name, tool);
+    return db.tools.update(name, tool)
   }
 
   addTool(tool: AiTool): Promise<string> {
@@ -48,7 +41,7 @@ class DbService {
   }
 
   removeTool(filter: (tool: AiTool) => boolean): Promise<number> {
-    return db.tools.filter(filter).delete();
+    return db.tools.filter(filter).delete()
   }
 
   async getConfig<T extends keyof AllConfig>(name: T): Promise<AllConfig[T] | undefined> {
@@ -64,6 +57,5 @@ class DbService {
   }
 }
 
-
-const dbService = new DbService();
-export default dbService;
+const dbService = new DbService()
+export default dbService

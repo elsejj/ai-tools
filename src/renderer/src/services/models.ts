@@ -12,6 +12,8 @@ export type AiTool = {
   responseFormat?: 'json' | 'html' | 'markdown'
   /// Post action to perform after the tool is executed
   postAction?: 'none' | 'copy' | 'save'
+  /// Optional model to use for this tool
+  model?: string
 }
 
 /// The export format of the tools
@@ -29,7 +31,8 @@ export function aiToolEqual(a: AiTool, b: AiTool): boolean {
     a.userPrompt === b.userPrompt &&
     a.mcp === b.mcp &&
     a.responseFormat === b.responseFormat &&
-    a.postAction === b.postAction
+    a.postAction === b.postAction &&
+    a.model === b.model
   )
 }
 

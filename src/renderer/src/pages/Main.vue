@@ -161,7 +161,14 @@ async function requestLLM(userPrompt: string, imageUrl: string = ''): Promise<st
     dangerouslyAllowBrowser: true
   })
 
-  const model = imageUrl && settings.llm.visionModel ? settings.llm.visionModel : settings.llm.model
+  // Use the tool's model if it's set, otherwise use the default logic
+  let model = settings.llm.model
+  if (currentTool.value?.model) {
+    model = currentTool.value.model
+  } else if (imageUrl && settings.llm.visionModel) {
+    model = settings.llm.visionModel
+  }
+
   const modelReasoningEffort =
     imageUrl && settings.llm.visionReasoningEffort
       ? settings.llm.visionReasoningEffort
@@ -169,7 +176,7 @@ async function requestLLM(userPrompt: string, imageUrl: string = ''): Promise<st
   const responseFormat = `请以 ${currentTool.value?.responseFormat || 'markdown'} 格式返回结果`
 
   const request: ChatCompletionCreateParamsStreaming = {
-    model,
+    model: model,
     messages: [],
     stream: true,
     stream_options: {

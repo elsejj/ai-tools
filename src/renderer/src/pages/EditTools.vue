@@ -91,6 +91,8 @@
         placeholder="选择MCP提词"
         @change="onMcpPromptSelected"
       />
+      <div>模型</div>
+      <InputText v-model="tool.model" class="w-full" placeholder="可选，覆盖默认模型" />
       <div>启用</div>
       <Checkbox v-model="tool.enabled" class="w-full" binary />
     </div>
@@ -123,6 +125,7 @@ const tool = ref<AiTool & { enabled: boolean }>({
   mcp: '',
   responseFormat: 'markdown',
   postAction: 'none',
+  model: '',
   enabled: false
 })
 const errMsg = ref<string>('')
@@ -247,6 +250,7 @@ function createTool() {
     mcp: '',
     responseFormat: 'markdown',
     postAction: 'none',
+    model: '',
     enabled: false
   }
 }
@@ -301,7 +305,8 @@ function toAiTool(tool: any): AiTool {
     userPrompt: tool.userPrompt,
     postAction: tool.postAction,
     mcp: tool.mcp,
-    responseFormat: tool.responseFormat
+    responseFormat: tool.responseFormat,
+    model: tool.model
   }
 }
 

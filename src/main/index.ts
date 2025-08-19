@@ -1,11 +1,10 @@
-import { app, BrowserWindow, ipcMain, globalShortcut, } from 'electron'
-import { electronApp} from '@electron-toolkit/utils'
+import { app, BrowserWindow, ipcMain, globalShortcut } from 'electron'
+import { electronApp } from '@electron-toolkit/utils'
 import { WindowManager } from './manager/windowManager'
 import { sendKeys, finalizeSendkey } from 'sendkey'
 import { join } from 'path'
-import { spawn, ChildProcessWithoutNullStreams  } from 'child_process'
+import { spawn, ChildProcessWithoutNullStreams } from 'child_process'
 import { existsSync, mkdirSync } from 'fs'
-
 
 let gatewayProcess: ChildProcessWithoutNullStreams | null = null
 
@@ -18,16 +17,16 @@ function restartGateway() {
     return
   }
   const exePath = app.getPath('exe')
-  const llmGatewayArgs = [llmGateway, "--port=30027", "--headless"]
+  const llmGatewayArgs = [llmGateway, '--port=30027', '--headless']
   console.log('llmGateway:', exePath, llmGatewayArgs)
 
-  gatewayProcess = spawn(exePath, llmGatewayArgs , {
+  gatewayProcess = spawn(exePath, llmGatewayArgs, {
     env: {
-      "LLM_GATEWAY_KEY_STORE_FILE" : join(app.getPath('userData'), 'llmkeys.json'),
-      "ELECTRON_RUN_AS_NODE": "1",
+      LLM_GATEWAY_KEY_STORE_FILE: join(app.getPath('userData'), 'llmkeys.json'),
+      ELECTRON_RUN_AS_NODE: '1'
     },
-    detached: true,
-  });
+    detached: true
+  })
 }
 
 function stopGateway() {
@@ -37,7 +36,10 @@ function stopGateway() {
     gatewayProcess = null
   }
   console.log('sendkey finalized successfully')
-  finalizeSendkey()
+  if (process.platform === 'linux') {
+    // only finalize sendkey on linux
+    finalizeSendkey()
+  }
 }
 
 // This method will be called when Electron has finished
@@ -54,7 +56,6 @@ app.whenReady().then(() => {
     console.log('Creating user data directory:', llmResponsesDir)
     mkdirSync(llmResponsesDir, { recursive: true })
   }
-
 
   WindowManager.getInstance().createWindow()
 
@@ -79,23 +80,26 @@ app.whenReady().then(() => {
     const mainWindow = WindowManager.getInstance().mainWindow
     if (mainWindow) {
       if (proxy) {
-        mainWindow.webContents.session.setProxy({ mode: 'fixed_servers', proxyRules: proxy })
+        mainWindow.webContents.session
+          .setProxy({ mode: 'fixed_servers', proxyRules: proxy })
           .then(() => {
             console.log('Proxy set to:', proxy)
           })
           .catch((error) => {
             console.error('Failed to set proxy:', error)
           })
-      }else{
-        mainWindow.webContents.session.setProxy({ mode: 'system' }).then(() => {
-          console.log('Proxy reset to system settings')
-        }).catch((error) => {
-          console.error('Failed to reset proxy:', error)
-        })
+      } else {
+        mainWindow.webContents.session
+          .setProxy({ mode: 'system' })
+          .then(() => {
+            console.log('Proxy reset to system settings')
+          })
+          .catch((error) => {
+            console.error('Failed to reset proxy:', error)
+          })
       }
     }
   })
-
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
@@ -113,4 +117,3 @@ app.on('window-all-closed', () => {
     stopGateway()
   }
 })
-

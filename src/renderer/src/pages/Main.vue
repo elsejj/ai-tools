@@ -229,7 +229,7 @@ async function llmToolCall(
 ): Promise<string> {
   let mcpClient: McpClient | null = null
   try {
-    mcpClient = await connectMcpClient(currentTool.value?.mcp || '', 'sse')
+    mcpClient = await connectMcpClient(currentTool.value?.mcp || '', 'auto')
     if (mcpClient) {
       request.tools = await mcpListTools(mcpClient)
     }

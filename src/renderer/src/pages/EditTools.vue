@@ -180,7 +180,7 @@ watch(
         if (mcpClient.value) {
           mcpClient.value.close()
         }
-        mcpClient.value = await connectMcpClient(newVal, 'sse')
+        mcpClient.value = await connectMcpClient(newVal, 'auto')
         if (!mcpClient.value) {
           console.debug('connect mcp failed')
           return

@@ -5,45 +5,39 @@
 //! `ydotool` must be installed and running for this module to function correctly.
 //!
 
-const YDOTOOL_SOCKET: &str = "/tmp/sendkey_ydotool.sock";
-const YDOTOOL_PERMISSIONS: &str = "0666";
+//const YDOTOOL_SOCKET: &str = "/tmp/sendkey_ydotool.sock";
+//const YDOTOOL_PERMISSIONS: &str = "0666";
 
-use std::process::{Child, Command};
-use std::sync::{Mutex, OnceLock};
-use std::thread::sleep;
+use std::process::Command;
+//use std::thread::sleep;
 
-static YDOTOOLD_INSTANCE: OnceLock<Mutex<Child>> = OnceLock::new();
+// static YDOTOOLD_INSTANCE: OnceLock<Mutex<Child>> = OnceLock::new();
 
-fn init_ydotoold() -> Mutex<Child> {
-  let child = Command::new("sudo")
-    .arg("ydotoold")
-    .arg("-p")
-    .arg(YDOTOOL_SOCKET)
-    .arg("-P")
-    .arg(YDOTOOL_PERMISSIONS)
-    .spawn()
-    .expect("Failed to start ydotoold");
-  sleep(std::time::Duration::from_secs(1)); // Give ydotoold time to start
-  Mutex::new(child)
-}
+// fn init_ydotoold() -> Mutex<Child> {
+//   let child = Command::new("sudo")
+//     .arg("ydotoold")
+//     .arg("-p")
+//     .arg(YDOTOOL_SOCKET)
+//     .arg("-P")
+//     .arg(YDOTOOL_PERMISSIONS)
+//     .spawn()
+//     .expect("Failed to start ydotoold");
+//   sleep(std::time::Duration::from_secs(1)); // Give ydotoold time to start
+//   Mutex::new(child)
+// }
 
 pub(crate) fn send_keys(_keys: &str) -> Result<(), String> {
-  let _ = YDOTOOLD_INSTANCE.get_or_init(init_ydotoold); // Ensure ydotoold is running
+  //let _ = YDOTOOLD_INSTANCE.get_or_init(init_ydotoold); // Ensure ydotoold is running
 
   // use ydotool to send keys
   let mut command = Command::new("ydotool");
 
   let child = command
-    .env("YDOTOOL_SOCKET", YDOTOOL_SOCKET)
+    //.env("YDOTOOL_SOCKET", YDOTOOL_SOCKET)
     // send Ctrl+Insert to copy
     .args(["key", "29:1", "110:1", "110:0", "29:0"])
     .spawn()
-    .map_err(|e| {
-      format!(
-        "Failed to send keys: {}, current socket {}",
-        e, YDOTOOL_SOCKET
-      )
-    })?;
+    .map_err(|e| format!("Failed to send keys: {}, ", e))?;
 
   let output = child
     .wait_with_output()
@@ -58,15 +52,15 @@ pub(crate) fn send_keys(_keys: &str) -> Result<(), String> {
 }
 
 pub(crate) fn finalize_sendkey() -> Result<(), String> {
-  YDOTOOLD_INSTANCE.get().map(|child| {
-    if let Ok(mut child) = child.lock() {
-      if let Err(e) = child.kill() {
-        eprintln!("Failed to kill ydotoold: {}", e);
-      }
-    } else {
-      eprintln!("Failed to lock ydotoold process");
-    }
-  });
+  // YDOTOOLD_INSTANCE.get().map(|child| {
+  //   if let Ok(mut child) = child.lock() {
+  //     if let Err(e) = child.kill() {
+  //       eprintln!("Failed to kill ydotoold: {}", e);
+  //     }
+  //   } else {
+  //     eprintln!("Failed to lock ydotoold process");
+  //   }
+  // });
   Ok(())
 }
 

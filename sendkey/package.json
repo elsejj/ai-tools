@@ -32,5 +32,16 @@
     "test": "ava",
     "universal": "napi universal",
     "version": "napi version"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "package.json",
+    "README.md",
+    "*.node"
+  ],
+  "optionalDependencies": {
+    "sendkey-win32-x64-msvc": "0.0.0",
+    "sendkey-linux-x64-gnu": "0.0.0"
   }
 }

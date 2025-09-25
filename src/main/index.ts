@@ -42,6 +42,11 @@ function stopGateway() {
   }
 }
 
+const singleInstanceLock = app.requestSingleInstanceLock()
+if (!singleInstanceLock) {
+  app.quit()
+}
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
@@ -59,19 +64,23 @@ app.whenReady().then(() => {
 
   WindowManager.getInstance().createWindow()
 
-  // register global shortcuts Ctrl+Q
-  globalShortcut.register('CommandOrControl+Q', () => {
-    const mainWindow = WindowManager.getInstance().mainWindow
-    if (mainWindow) {
-      // do copy on current window
-      sendKeys('ctrl+c')
-      setTimeout(() => {
-        mainWindow.webContents.send('CtrlQ')
-      }, 200)
+  // register global shortcuts CommandOrControl+Q on non-linux platforms
+  // on linux, this shortcut is captured by the system
+  if (process.platform !== 'linux') {
+    globalShortcut.register('CommandOrControl+Q', () => {
+      console.log('CommandOrControl+Q is pressed')
+      const mainWindow = WindowManager.getInstance().mainWindow
+      if (mainWindow) {
+        // do copy on current window
+        sendKeys('ctrl+c')
+        setTimeout(() => {
+          mainWindow.webContents.send('CtrlQ')
+        }, 200)
 
-      mainWindow.showInactive()
-    }
-  })
+        mainWindow.showInactive()
+      }
+    })
+  }
 
   // start the gateway and listen for the restart event
   restartGateway()
@@ -115,5 +124,19 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
     stopGateway()
+  }
+})
+
+app.on('second-instance', () => {
+  // Someone tried to run a second instance, we should focus our window.
+  const mainWindow = WindowManager.getInstance().mainWindow
+  if (mainWindow) {
+    // do copy on current window
+    sendKeys('ctrl+c')
+    setTimeout(() => {
+      mainWindow.webContents.send('CtrlQ')
+    }, 200)
+    if (mainWindow.isMinimized()) mainWindow.restore()
+    mainWindow.focus()
   }
 })

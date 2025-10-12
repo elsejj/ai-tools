@@ -53,6 +53,7 @@
 import { computed, onUpdated, ref, useTemplateRef } from 'vue'
 import { Marked } from 'marked'
 import { markedHighlight } from 'marked-highlight'
+import markedKatex from 'marked-katex-extension'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/github.css'
 import jsonLang from 'highlight.js/lib/languages/json'
@@ -133,7 +134,8 @@ const marked = new Marked(
       }
       return code
     }
-  })
+  }),
+  markedKatex({ nonStandard: true, output: 'mathml' })
 )
 
 const htmlSource = computed(() => {

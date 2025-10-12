@@ -22,6 +22,8 @@
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.2",
     "@electron-toolkit/utils": "^4.0.0",
+    "katex": "^0.16.23",
+    "marked-katex-extension": "^5.1.5",
     "sendkey": "./sendkey/dist"
   },
   "devDependencies": {

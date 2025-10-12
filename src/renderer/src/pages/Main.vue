@@ -269,7 +269,11 @@ async function llmToolCall(
           const tc = tooCalls[toolCall.index]
           if (tc) {
             if (tc.function) {
-              tc.function.arguments += toolCall.function?.arguments || ''
+              if (tc.function.arguments) {
+                tc.function.arguments += toolCall.function?.arguments || ''
+              } else {
+                tc.function.arguments = toolCall.function?.arguments || ''
+              }
             } else {
               tc.function = toolCall.function
             }

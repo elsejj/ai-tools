@@ -169,10 +169,11 @@ async function requestLLM(userPrompt: string, imageUrl: string = ''): Promise<st
     model = settings.llm.visionModel
   }
 
-  const modelReasoningEffort =
-    imageUrl && settings.llm.visionReasoningEffort
-      ? settings.llm.visionReasoningEffort
-      : settings.llm.reasoningEffort
+  const modelReasoningEffort = currentTool.value?.reasoningEffort
+    ? currentTool.value?.reasoningEffort
+    : imageUrl && settings.llm.visionReasoningEffort
+    ? settings.llm.visionReasoningEffort
+    : settings.llm.reasoningEffort
   const responseFormat = `请以 ${currentTool.value?.responseFormat || 'markdown'} 格式返回结果`
 
   const request: ChatCompletionCreateParamsStreaming = {

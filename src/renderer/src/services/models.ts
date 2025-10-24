@@ -14,6 +14,8 @@ export type AiTool = {
   postAction?: 'none' | 'copy' | 'save'
   /// Optional model to use for this tool
   model?: string
+  /// Optional model thinking effort for this tool
+  reasoningEffort?: 'minimal' | 'medium' | 'high' | 'none' | 'auto' | ''
 }
 
 /// The export format of the tools
@@ -32,7 +34,8 @@ export function aiToolEqual(a: AiTool, b: AiTool): boolean {
     a.mcp === b.mcp &&
     a.responseFormat === b.responseFormat &&
     a.postAction === b.postAction &&
-    a.model === b.model
+    a.model === b.model &&
+    a.reasoningEffort === b.reasoningEffort
   )
 }
 

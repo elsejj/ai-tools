@@ -93,6 +93,21 @@
       />
       <div>模型</div>
       <InputText v-model="tool.model" class="w-full" placeholder="可选，覆盖默认模型" />
+      <div>思考力度</div>
+      <div class="flex gap-2">
+        <RadioButton v-model="tool.reasoningEffort" name="none" value="" class="" />
+        <label for="none" class="">默认</label>
+        <RadioButton v-model="tool.reasoningEffort" name="none" value="none" class="" />
+        <label for="none" class="">无</label>
+        <RadioButton v-model="tool.reasoningEffort" name="low" value="low" class="" />
+        <label for="low" class="">低</label>
+        <RadioButton v-model="tool.reasoningEffort" name="medium" value="medium" class="" />
+        <label for="medium" class="">中</label>
+        <RadioButton v-model="tool.reasoningEffort" name="high" value="high" class="" />
+        <label for="high" class="">高</label>
+        <RadioButton v-model="tool.reasoningEffort" name="auto" value="auto" class="" />
+        <label for="auto" class="">自动</label>
+      </div>
       <div>启用</div>
       <Checkbox v-model="tool.enabled" class="w-full" binary />
     </div>
@@ -126,6 +141,7 @@ const tool = ref<AiTool & { enabled: boolean }>({
   responseFormat: 'markdown',
   postAction: 'none',
   model: '',
+  reasoningEffort: '',
   enabled: false
 })
 const errMsg = ref<string>('')
@@ -251,6 +267,7 @@ function createTool() {
     responseFormat: 'markdown',
     postAction: 'none',
     model: '',
+    reasoningEffort: '',
     enabled: false
   }
 }
@@ -306,7 +323,8 @@ function toAiTool(tool: any): AiTool {
     postAction: tool.postAction,
     mcp: tool.mcp,
     responseFormat: tool.responseFormat,
-    model: tool.model
+    model: tool.model,
+    reasoningEffort: tool.reasoningEffort
   }
 }
 

@@ -30,4 +30,4 @@ jobs:
         with:
           files: |
             dist/ai-tools-*.exe
-            dist/ai-tools-*.deb
+            dist/ai-tools-*.AppImage

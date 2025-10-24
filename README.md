@@ -1,6 +1,6 @@
 # 功能
 
-现在有很多基于大模型API的客户端可用, 它们大多数需要你切换到它的界面, 然后在输入框输入或是复制粘贴内容, 发送请求, 等待结果返回, 然后再切换回你原来的软件中.
+现在有很多基于大模型 API 的客户端可用, 它们大多数需要你切换到它的界面, 然后在输入框输入或是复制粘贴内容, 发送请求, 等待结果返回, 然后再切换回你原来的软件中.
 而 `AiToolsCtrlQ` 则是一个更为方便的工具, 它允许你在任何软件中, 选中一些内容, 按下 `Ctrl+Q`, 就可以将选中的内容发送给大模型, `AiToolsCtrlQ` 设计为小窗模式, 便于你在使用其他软件时, 也能随时查看模型的返回结果, 而不会打断你当前的工作.
 
 同时, `AiToolsCtrlQ` 不保留上下文, 而且将每次请求都视为独立的请求, 所以它适合诸如 `翻译`, `答疑`, `表格提取` 等一次性的使用场景.
@@ -8,15 +8,15 @@
 例如:
 
 - 在 `calibre` 电子书阅读器中, 选中一段文字, 按下 `Ctrl+Q`, 发送`翻译`请求, 让模型翻译选中的文字.
-<img src="./doc/screenshots/calibre.jpg" alt="在 `calibre` 中翻译" width="70%">
+  <img src="./doc/screenshots/calibre.jpg" alt="在 `calibre` 中翻译" width="70%">
 - 对一个包含表格的图片, 复制图片后, 按下 `Ctrl+Q`, 发送`表格提取`请求, 让模型将图片中的表格提取出来, 以便在电子表格中使用.
-<img src="./doc/screenshots/image_table.jpg" alt="图片表格提取" width="70%">
+  <img src="./doc/screenshots/image_table.jpg" alt="图片表格提取" width="70%">
 - 在任何支持选中复制的软件中, 选中一些内容, 按下 `Ctrl+Q`, 发送`答疑`请求, 让模型回答你对选中内容的进行解释.
-<img src="./doc/screenshots/term.jpg" alt="答疑" width="70%">
+  <img src="./doc/screenshots/term.jpg" alt="答疑" width="70%">
 
 ## MCP 支持
 
-`AiToolsCtrlQ` 支持 `MCP` 的 `Prompts` 和 `Tools` 功能，但仅支持通过 `HTTP` 的MCP服务, 不支持 `STDIO` 访问 `MCP`
+`AiToolsCtrlQ` 支持 `MCP` 的 `Prompts` 和 `Tools` 功能，但仅支持通过 `HTTP` 的 MCP 服务, 不支持 `STDIO` 访问 `MCP`
 
 - `Prompts` 功能, 如果 `MCP` 提供了 `Prompts` 功能, 在配置时会列出所有可用的 `Prompts`, 你可以选择一个作为默认的 `Prompt`
 - `Tools` 功能, 如果 `MCP` 提供了 `Tools` 功能, 在使用时, 这些功能会由模型自动选择是否使用.
@@ -53,11 +53,41 @@
 
 ### Linux
 
-在 Linux 下发送键盘事件并不容易，Linux 桌面环境很复杂，为了最大兼任各种桌面系统(X11/Wayland等)，使用 [ydotool](https://github.com/ReimuNotMoe/ydotool) 来发送键盘事件。
+在 Linux 下发送键盘事件并不容易，Linux 桌面环境很复杂，为了最大兼任各种桌面系统(X11/Wayland 等)，使用 [ydotool](https://github.com/ReimuNotMoe/ydotool) 来发送键盘事件。
 
 1. 请先安装新版本的 `ydotool`, 版本号大于 1.0 (Ubuntu APT 的版本比较低， 建议从项目主页手动安装)
 2. 确保 `ydotoold` 放置在 `sudo` 可以找到的路径中，一般可放置在 `/usr/local/bin` 里，在终端中输入 `sudo ydotoold -V`, 如果输出了版本号，则为正常。
 3. 将 `ydotool` 放置在用户路径中，如 `$HOME/.local/bin` 中，亦可放置在 `/usr/local/bin` 中，在终端中输入 `ydotool --help` 有正常的输出，则为正常。
 4. 安装包自带的 `sendkey` 最低需要 Ubuntu 24.04, 即 2.42 版本的 libc, 如使用更低版本，需要自行编译打包。
 
+### 一些脚本
 
+将 `ydotoold` 设置为开机自启动服务
+
+1. 将以下内容保存为 `/etc/systemd/system/ydotoold.service`
+
+```
+[Unit]
+Description=Starts ydotoold Daemon
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=3
+ExecStartPre=/bin/sleep 2
+ExecStart=/usr/local/bin/ydotoold -p /run/user/1000/.ydotool_socket -P 0666
+ExecReload=/usr/bin/kill -HUP $MAINPID
+KillMode=process
+TimeoutSec=180
+
+[Install]
+WantedBy=basic.target
+```
+
+2. 执行以下命令启用服务
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable ydotoold.service
+sudo systemctl start ydotoold.service
+```

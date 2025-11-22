@@ -16,7 +16,7 @@ export async function connectMcpClient(
   const controller = new AbortController()
   const signal = controller.signal
   const response = await fetch(u, { signal })
-  if (!response.ok) {
+  if (response.status !== 200 && response.status !== 406) {
     throw new Error(`Failed to fetch from ${url}: ${response.statusText}`)
   }
   controller.abort()

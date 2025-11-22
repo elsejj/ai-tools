@@ -248,7 +248,11 @@ async function onMcpPromptSelected(event: any) {
         if (prompt) {
           tool.value.systemPrompt = prompt.messages
             .map((message) => {
-              return message.content.text
+              if (message.content.type === 'text') {
+                return message.content.text
+              } else {
+                return ''
+              }
             })
             .join('\n')
           selectedPrompt.prompt = tool.value.systemPrompt

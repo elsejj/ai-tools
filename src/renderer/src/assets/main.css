@@ -75,4 +75,10 @@ h6 {
   border-radius: 4px;
   padding: 1rem 0.5rem 1rem 0.5rem;
   margin: 1rem 1rem;
+  font-family: var(--font-mono);
+}
+
+.katex {
+  font-size: 1.1em;
+  font-family: var(--font-mono);
 }
